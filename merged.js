@@ -89,7 +89,7 @@ app.get("/check-username", async (req, res) => {
   }
 });
 
-// Student signup [By Shreya]
+// Student signup [By Shreya] [fixes all Errors]
 const studentSchema = new mongoose.Schema({
   UserName: { type: String, required: true },
   LastName: { type: String },
