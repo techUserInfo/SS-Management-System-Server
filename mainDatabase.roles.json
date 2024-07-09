@@ -1,0 +1,40 @@
+[{
+  "_id": {
+    "$oid": "668cfabb0f1de6cc6c7b0768"
+  },
+  "UserName": "user1",
+  "role": "admin",
+  "Email": "john.doe1@example.com",
+  "PhoneNumber": "123-456-7890",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668cfad50f1de6cc6c7b0770"
+  },
+  "UserName": "user2",
+  "role": "superadmin",
+  "Email": "jane.smith2@example.com",
+  "PhoneNumber": "987-654-3210",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668cfaf50f1de6cc6c7b0778"
+  },
+  "UserName": "user3",
+  "role": "teacher",
+  "Email": "alice.johnson3@example.com",
+  "PhoneNumber": "555-555-5555",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668cfafe0f1de6cc6c7b077e"
+  },
+  "UserName": "user4",
+  "role": "student",
+  "Email": "bob.brown4@example.com",
+  "PhoneNumber": "444-444-4444",
+  "__v": 0
+}]
