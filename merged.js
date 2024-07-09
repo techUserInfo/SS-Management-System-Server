@@ -56,7 +56,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-// Check email and phone number [By Chaitali]
+// Check email and phone number [By Chaitali] [fixes all Errors]
 app.get("/check-email", async (req, res) => {
   try {
     const user = await User.findOne({ Email: req.body.Email });
@@ -75,7 +75,7 @@ app.get("/check-phone", async (req, res) => {
   }
 });
 
-// Check username [By Sayani]
+// Check username [By Sayani] [fixes all Errors]
 app.get("/check-username", async (req, res) => {
   try {
     const user = await User.findOne({ UserName: req.body.UserName });
