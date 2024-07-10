@@ -21,5 +21,5 @@ exports.UserLogin = async (req, res) => {
 
 // Login API [By Pritom]
 exports.Test = async (req, res) => {
-  res.status(200).json({ message: "Login successful" });
+  res.status(200).json({ message: "Connected Succesfully" });
 };
