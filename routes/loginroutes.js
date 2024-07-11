@@ -17,7 +17,7 @@ const {
 
 const { StudentSignup } = require("../controller/student");
 
-router.get("/login", UserLogin);
+router.post("/login", UserLogin);
 router.get("/", Test);
 router.get("/check-email", ValidateEmail);
 router.get("/check-phone", ValidatePhone);
