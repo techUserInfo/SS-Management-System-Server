@@ -13,6 +13,8 @@ const {
   ValidatePhone,
   ValidateEmail,
   ValidateUserID,
+  ValidateTeacher,
+  ValidateAdmin
 } = require("../controller/registration");
 
 const { StudentSignup } = require("../controller/student");
@@ -23,6 +25,9 @@ router.get("/check-email", ValidateEmail);
 router.get("/check-phone", ValidatePhone);
 router.get("/check-username", ValidateUserID);
 
+router.get("/teachers", ValidateTeacher)
+router.get("/admin", ValidateAdmin)
+
 router.post("/signup-student", StudentSignup);
 
 // Assign role route
@@ -30,7 +35,7 @@ router.post("/assignrole", AssignRole);
 // Update role route
 router.patch("/updaterole", UpdateRole);
 
-router.delete("/superadmin/user", RemoveAdmin);
-router.delete("/admin/user", RemoveSuperAdmin);
+router.delete("/superadmin/user", RemoveSuperAdmin);
+router.delete("/admin/user", RemoveAdmin);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const Student = require("../models/student");
+const Student = require("../models/student.js");
 
 // Student signup [By Shreya] [fixes all Errors]
 exports.StudentSignup = async (req, res) => {
