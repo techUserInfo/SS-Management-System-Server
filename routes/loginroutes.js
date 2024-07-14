@@ -17,7 +17,7 @@ const {
   ValidateAdmin
 } = require("../controller/registration");
 
-const { StudentSignup } = require("../controller/student");
+const { StudentSignup,ValidateStudent } = require("../controller/student");
 
 router.get("/login", UserLogin);
 router.get("/", Test);
@@ -26,7 +26,11 @@ router.get("/check-phone", ValidatePhone);
 router.get("/check-username", ValidateUserID);
 
 router.get("/teachers", ValidateTeacher)
-router.get("/admin", ValidateAdmin)
+router.get("/admins", ValidateAdmin)
+router.get("/students", ValidateStudent)
+
+
+
 
 router.post("/signup-student", StudentSignup);
 
