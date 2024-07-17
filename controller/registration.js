@@ -67,3 +67,18 @@ exports.ValidateAdmin = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Signup API [By Pritom]
+exports.UserSignup = async (req, res) => {
+  const newUser = new User(req.body);
+  try {
+    const find = await User.findOne({ UserName: req.body.UserName });
+    if (find) {
+      return res.status(400).json({ message: "User already registered" });
+    }
+    await newUser.save();
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};

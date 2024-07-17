@@ -14,7 +14,8 @@ const {
   ValidateEmail,
   ValidateUserID,
   ValidateTeacher,
-  ValidateAdmin
+  ValidateAdmin,
+  UserSignup
 } = require("../controller/registration");
 
 const { StudentSignup,ValidateStudent } = require("../controller/student");
@@ -33,6 +34,7 @@ router.get("/students", ValidateStudent)
 
 
 router.post("/signup-student", StudentSignup);
+router.post("/signup",UserSignup);
 
 // Assign role route
 router.post("/assignrole", AssignRole);
