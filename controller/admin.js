@@ -1,7 +1,9 @@
 const User = require("../models/user");
 const Admin = require("../models/admin");
-
-// Login API [By Pritom]
+const SuperAdmin = require("../models/supadmin");
+const Teacher = require("../models/teacher");
+const Role = require("../models/role");
+// Assignrole [By Pritom]
 exports.AssignRole = async (req, res) => {
   const { UserName, role } = req.body;
 
@@ -46,6 +48,17 @@ exports.AssignRole = async (req, res) => {
         PhoneNumber: user.PhoneNumber,
       });
       await newSuperAdmin.save();
+    }
+
+    
+    if (role === "teacher") {
+      const newTeacher = new Teacher({
+        UserName,
+        role,
+        Email: user.Email,
+        PhoneNumber: user.PhoneNumber,
+      });
+      await newTeacher.save();
     }
 
     res.status(200).json({ message: "Role assigned successfully" });
@@ -96,6 +109,21 @@ exports.UpdateRole = async (req, res) => {
       await newSuperAdmin.save();
     }
 
+    
+    if (existingRole.role === "teacher" && role !== "teacher") {
+      await Teacher.findOneAndDelete({ UserName });
+    } else if (role === "teacher" && existingRole.role !== "teacher") {
+      const newTeacher = new Teacher({
+        UserName,
+        role,
+        Email: user.Email,
+        PhoneNumber: user.PhoneNumber,
+      });
+      await newTeacher.save();
+    }
+
+
+
     existingRole.role = role;
     await existingRole.save();
 
@@ -105,9 +133,44 @@ exports.UpdateRole = async (req, res) => {
   }
 };
 
+// Middleware to check if UserName is admin
+const isAdmin = async (req, res, next) => {
+  const { UserName } = req.body;
+  try {
+    const userRole = await Role.findOne({ UserName });
+    if (userRole && userRole.role === "admin") {
+      next();
+    } else {
+      res
+        .status(403)
+        .json({ message: "Forbidden: Only admins can perform this action" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// Middleware to check if UserName is superadmin
+const isSuperAdmin = async (req, res, next) => {
+  const { UserName } = req.body;
+  try {
+    const userRole = await Role.findOne({ UserName });
+    if (userRole && userRole.role === "superadmin") {
+      next();
+    } else {
+      res.status(403).json({
+        message: "Forbidden: Only superadmins can perform this action",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
 // Delete user route for Admins
 exports.RemoveAdmin = async (req, res) => {
-  isAdmin(req, res);
+  isAdmin ;
   const { UserNameToDelete } = req.body;
 
   try {
@@ -129,6 +192,8 @@ exports.RemoveAdmin = async (req, res) => {
 
     await User.findOneAndDelete({ UserName: UserNameToDelete });
     await Role.findOneAndDelete({ UserName: UserNameToDelete });
+    await Teacher.findOneAndDelete({ UserName: UserNameToDelete });
+
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
@@ -138,13 +203,15 @@ exports.RemoveAdmin = async (req, res) => {
 
 // Delete user route for superAdmins
 exports.RemoveSuperAdmin = async (req, res) => {
-  isSuperAdmin(req, res);
+  isSuperAdmin;
   const { UserNameToDelete } = req.body;
 
   try {
     await User.findOneAndDelete({ UserName: UserNameToDelete });
     await Role.findOneAndDelete({ UserName: UserNameToDelete });
     await Admin.findOneAndDelete({ UserName: UserNameToDelete });
+    await Teacher.findOneAndDelete({ UserName: UserNameToDelete });
+
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
@@ -152,36 +219,3 @@ exports.RemoveSuperAdmin = async (req, res) => {
   }
 };
 
-// Middleware to check if UserName is admin4
-const isAdmin = async (req, res) => {
-  const { UserName } = req.body;
-  try {
-    const userRole = await Role.findOne({ UserName });
-    if (userRole && userRole.role === "admin") {
-      next();
-    } else {
-      res
-        .status(403)
-        .json({ message: "Forbidden: Only admins can perform this action" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-// Middleware to check if UserName is superadmin
-const isSuperAdmin = async (req, res) => {
-  const { UserName } = req.body;
-  try {
-    const userRole = await Role.findOne({ UserName });
-    if (userRole && userRole.role === "superadmin") {
-      next();
-    } else {
-      res.status(403).json({
-        message: "Forbidden: Only superadmins can perform this action",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
