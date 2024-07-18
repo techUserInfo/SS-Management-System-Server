@@ -14,18 +14,3 @@ exports.StudentSignup = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
-
-//Show All Students From Students Collection [By Ishita] /* NEW */
-
-exports.ValidateStudent = async (req, res) => {
-  try {
-    const user = await Student.find();
-    if (user.length === 0) {
-      return res.status(404).json({ message: 'No Students found' });
-    } 
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
