@@ -6,17 +6,17 @@ const bodyParser = require("body-parser");
 
 const LoginRoute = require("./routes/loginroutes");
 
-app.use(express.json());
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Credentials", true);
+var allowCrossDomain = function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
   next();
-});
+};
+
 dotenv.config();
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(LoginRoute);
+app.use(allowCrossDomain);
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -26,5 +26,9 @@ mongoose
     )
   )
   .catch((err) => console.log(err));
+
+app.use(LoginRoute);
+
+app.use(express.json());
 
 module.exports = app;
