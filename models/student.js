@@ -10,6 +10,7 @@ const studentSchema = new mongoose.Schema({
   Class: { type: String, required: true },
   Section: { type: String, required: true },
   SPOC: { type: String, default: null },
-});
+}, { timestamps: true }
+);
 
 module.exports = mongoose.model("Student", studentSchema);

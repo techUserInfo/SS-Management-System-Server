@@ -9,6 +9,7 @@ const {
   UpdateRole,
   RemoveAdmin,
   RemoveSuperAdmin,
+  AdminRegCount
 } = require("../controller/admin");
 
 const {
@@ -18,10 +19,15 @@ const {
   ValidateTeacher,
   ValidateAdmin,
   UserSignup,
-  ValidateRoleTable
+  ValidateRoleTable,
+  TeacherRegCount
 } = require("../controller/registration");
 
-const { StudentSignup,ValidateStudent } = require("../controller/student");
+const { 
+  StudentSignup,
+  ValidateStudent,
+  StudentRegCount 
+} = require("../controller/student");
 
 router.post("/login", UserLogin);
 router.get("/", Test);
@@ -30,7 +36,9 @@ router.post("/check-phone", ValidatePhone);
 router.post("/check-username", ValidateUserID);
 
 router.get("/teachers", ValidateTeacher)
+router.get("/teacherCount",TeacherRegCount)
 router.get("/admins", ValidateAdmin)
+router.get("/adminCount",AdminRegCount)
 router.get("/students", ValidateStudent)
 router.get("/roles", ValidateRoleTable)
 
@@ -39,6 +47,7 @@ router.get("/roles", ValidateRoleTable)
 
 router.post("/signup-student", StudentSignup);
 router.post("/signup",UserSignup);
+router.get("/studentCount",StudentRegCount)
 
 // Assign role route
 router.post("/assignrole", AssignRole);

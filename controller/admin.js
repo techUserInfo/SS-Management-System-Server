@@ -219,3 +219,16 @@ exports.RemoveSuperAdmin = async (req, res) => {
   }
 };
 
+exports.AdminRegCount=async(req,res)=>{
+  const date = new Date();
+    date.setDate(date.getDate() - 90);
+  try {
+      const count = await Admin.countDocuments([
+        { createdAt: { $gte: date } },
+    { _id: '$role'} 
+      ]);
+      res.json({ count });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error' });
+  }
+};

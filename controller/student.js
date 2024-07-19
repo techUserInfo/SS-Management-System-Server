@@ -29,3 +29,18 @@ exports.ValidateStudent = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+exports.StudentRegCount=async(req,res)=>{
+  const date = new Date();
+    date.setDate(date.getDate() - 90);
+  try {
+      const count = await Student.countDocuments([
+        { createdAt: { $gte: date } },
+    { _id: '$role'} 
+      ]);
+      res.json({ count });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error' });
+  }
+};

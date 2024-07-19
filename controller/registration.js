@@ -108,3 +108,17 @@ exports.UserSignup = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+exports.TeacherRegCount=async(req,res)=>{
+  const date = new Date();
+    date.setDate(date.getDate() - 90);
+  try {
+      const count = await Teacher.countDocuments([
+        { createdAt: { $gte: date } },
+    { _id: '$role'} 
+      ]);
+      res.json({ count });
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error' });
+  }
+};
